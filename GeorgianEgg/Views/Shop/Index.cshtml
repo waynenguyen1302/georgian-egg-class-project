@@ -1,0 +1,21 @@
+﻿@model IEnumerable<GeorgianEgg.Models.Category>
+
+@{
+    ViewData["Title"] = "Shop our Store";
+}
+
+<h1>Shop our Store</h1>
+
+<section class="row card-group">
+    @foreach(var category in Model)
+    {
+        <div class="col-lg-4 mb-3">
+            <div class="card mb-4">
+                <div class="card-body text-center h-100">
+                    <a asp-action="Category" asp-route-id="@category.Id">@category.Name</a>
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
