@@ -122,6 +122,7 @@ namespace GeorgianEgg.Areas.Identity.Pages.Account
                 {
                     // custom code: make all new users members of the Customer role automatically
                     await _userManager.AddToRoleAsync(user, "Customer");
+                   
 
                     _logger.LogInformation("User created a new account with password.");
 
