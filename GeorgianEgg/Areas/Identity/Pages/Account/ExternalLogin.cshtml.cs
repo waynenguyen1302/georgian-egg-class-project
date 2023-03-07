@@ -159,6 +159,9 @@ namespace GeorgianEgg.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    //custom code: make new user role customer automatically
+                    await _userManager.AddToRoleAsync(user, "Customer");
+
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
