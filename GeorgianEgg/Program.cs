@@ -55,4 +55,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+//enable session
+app.UseSession();
+
 app.Run();

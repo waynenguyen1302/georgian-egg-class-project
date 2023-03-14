@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<GeorgianEgg.Models.Product>
+@{
+    ViewData["Title"] = "Shop by " + ViewData["CategoryName"];
+}
 
 <h1>Shop by @ViewData["CategoryName"]</h1>
 
@@ -8,7 +11,24 @@
         <div class="col-lg-4 mb-3">
             <div class="card mb-4">
                 <div class="card-body text-center h-100">
-                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">@product.Name</a>
+                    @if(product.Image != null)
+                    {
+                        <img
+                       src="~/img/products/@product.Image" 
+                       alt="photo of @product.Name"
+                       class="img-thumbnail"
+                        />
+                    }
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
+                        @product.Name
+                    </a>
+                    <h6>@product.Price.ToString("C")</h6>                    
+                    
+                    <form method="POST" action="/Shop/AddToCart">
+                        <input type="hidden" id="ProductId" name=" =ProductId" value="@product.Id" />
+                        <input type="hidden" id="Quantity" name=" =Quantity" value="1" />
+                        <button class="btn btn-primary">Add To Cart</button>
+                    </form>
                 </div>
             </div>
         </div>
