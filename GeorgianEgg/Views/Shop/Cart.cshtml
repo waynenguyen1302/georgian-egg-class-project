@@ -1,0 +1,67 @@
+﻿@model IEnumerable<GeorgianEgg.Models.CartLine>
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>
+                Price per
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                Total Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (item.Product.Image != null)
+                {
+                    <img class="thumbnail" src="~/img/products/@item.Product.Image" alt="Product Photo" />
+                }
+            </td>
+            <td>
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Name</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Price)
+            </td>
+            <td>
+                <form method="POST" action="/Shop/UpdateCart">
+                    <input type="hidden" id="CartLineId" name="CartLineId" value="@item.Id" />
+                    <input name="Quantity" id="Quantity" required type="number" min="1" max="999" value="@item.Quantity" />
+                    <button class="btn btn-primary btn-sm">Update</button>
+                </form>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <form method="POST" action="/Shop/RemoveFromCart">
+                    <input type="hidden" id="CartLineId" name="CartLineId" value="@item.Id" />
+                    <button class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<h3>Total: @ViewData["TotalPrice"]</h3>
+
+<a class="btn btn-success" asp-controller="Shop" asp-action="Checkout">Checkout</a>

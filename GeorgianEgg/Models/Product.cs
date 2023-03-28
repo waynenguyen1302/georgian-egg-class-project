@@ -23,5 +23,6 @@ namespace GeorgianEgg.Models
 
         public Brand? Brand { get; set; }
         public Category? Category { get; set; }
+        public List<OrderLine>? OrderLines { get; set; }
     }
 }

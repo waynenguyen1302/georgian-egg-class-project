@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<h1>Process Payment</h1>
+
+<script src="https://js.stripe.com/v3"></script>
+
+<button id="checkout">Pay</button>
+
+<script type="text/javascript">
+    var stripe = Stripe("@ViewData["PublishableKey"]");
+    var checkoutBtn = document.getElementById("checkout");
+    checkoutBtn.addEventListener("click", () => {
+        fetch("/Shop/Payment",
+        {
+            method: "POST",
+        })
+        .then(res => res.json())
+        .then(session => {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(res => {
+            console.log(res);
+            if (res.error)
+            {
+                alert(res.error.message);
+            }
+        })
+        .catch(e => console.error(e));
+    });
+</script>
